@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DARK LEGEND Assistant</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: radial-gradient(circle at top left, #0f0f0f, #000000);
+      color: #ff4f4f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      color: #ff1e56;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #ff1e56;
+    }
+    #chatbox {
+      width: 90%;
+      max-width: 600px;
+      background-color: #121212;
+      border: 1px solid #ff1e56;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 20px red;
+    }
+    #response {
+      margin-top: 20px;
+      background-color: #1a1a1a;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px dashed #ff4f4f;
+      min-height: 80px;
+      white-space: pre-wrap;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      background: #0f0f0f;
+      color: #fff;
+      border: 1px solid #ff1e56;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #ff1e56;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #ff0033;
+    }
+  </style>
+</head>
+<body>
+  <h1>DARK LEGEND Assistant</h1>
+  <div id="chatbox">
+    <input type="text" id="userInput" placeholder="Kuch bhi pucho mere se... 😉" />
+    <button onclick="askAssistant()">Puch looo 💋</button>
+    <div id="response">💃 Haye jaan! Main Alexa hoon, tumhari DARK LEGEND ki romantic assistant 😘</div>
+  </div>  <script>
+    async function askAssistant() {
+      const input = document.getElementById("userInput").value;
+      if (!input.trim()) return;
+      document.getElementById("response").innerHTML = "⏳ Soch rahi hoon baby...";
+
+      try {
+        const res = await fetch(`https://bj-tricks-assistant.bj-dev-x.workers.dev/?text=${encodeURIComponent(input)}`);
+        const data = await res.json();
+
+        let reply = data.output || "Uff mujhe samajh nahi aaya, phir se poocho na jaanu! 💔";
+        reply += "\n\n💃 Main hoon Alexa — tumhari DARK LEGEND ki funny aur thodi romantic assistant 😉💋";
+
+        document.getElementById("response").innerText = reply;
+      } catch (err) {
+        document.getElementById("response").innerText = "😢 Arey yaar! Network ka scene off ho gaya lagta hai...";
+      }
+    }
+  </script></body>
+</html>
