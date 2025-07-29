@@ -95,7 +95,7 @@
       responseBox.innerText = "⏳ Soch rahi hoon... ruk ja zara cutie 😘";
 
       try {
-        const res = await fetch(`https://bj-tricks-assistant.bj-dev-x.workers.dev/?text=${encodeURIComponent(input)}`);
+        const res = await fetch(`/api/ask?q=${encodeURIComponent(input)}`);
         const data = await res.json();
         let reply = data.output || "😢 Sorry jaan, kuch samajh nahi aaya. Dobara try karo na!";
 
