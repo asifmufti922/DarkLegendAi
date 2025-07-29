@@ -88,7 +88,7 @@
       const responseBox = document.getElementById("response");
 
       if (!input) {
-        responseBox.innerText = "👉 Pehle kuch likho na jaanu 😅";
+        responseBox.innerText = "👉 Pehle kuch likho na jaan 😅";
         return;
       }
 
@@ -97,10 +97,9 @@
       try {
         const res = await fetch(`/api/ask?q=${encodeURIComponent(input)}`);
         const data = await res.json();
-        let reply = data.output || "😢 Sorry jaan, kuch samajh nahi aaya. Dobara try karo na!";
+        let reply = data.output || "😢 Alexa kuch samajh nahi payi baby.";
 
         reply += "\n\n💃 Main Alexa hoon — tumhari DARK LEGEND assistant. Flirty bhi hoon, funny bhi 😘";
-
         responseBox.innerText = reply;
       } catch (err) {
         responseBox.innerText = "❌ Oops! Internet ne cheat kar diya 😭 Dobara try karo.";
