@@ -1,110 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DARK LEGEND Assistant</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Courier New', monospace;
-      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-      color: #ff4f4f;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      justify-content: center;
-    }
-    h1 {
-      font-size: 2.5rem;
-      text-shadow: 0 0 10px #ff0033;
-      margin-bottom: 15px;
-    }
-    .chatbox {
-      width: 95%;
-      max-width: 600px;
-      background: #111;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px #ff1e56;
-      border: 1px solid #ff0033;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      background: #1a1a1a;
-      border: 1px solid #ff0033;
-      color: #fff;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #ff0033;
-      border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-    }
-    button:hover {
-      background: #cc002a;
-    }
-    .response {
-      margin-top: 15px;
-      background: #1f1f1f;
-      border: 1px dashed #ff4f4f;
-      padding: 15px;
-      border-radius: 8px;
-      min-height: 80px;
-      white-space: pre-wrap;
-      color: #ffeaea;
-      font-style: italic;
-    }
-    footer {
-      margin-top: 30px;
-      color: #ff4f4f;
-      font-size: 0.9rem;
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Nameless Assistant (Alexa Style)</title>
+<style>/* Styling red-black, responsive...*/</style>
 </head>
 <body>
-  <h1>🔥 DARK LEGEND Assistant (Alexa)</h1>
-  <div class="chatbox">
-    <input type="text" id="userInput" placeholder="Kya puchna hai jaan? 😉" />
-    <button onclick="askAlexa()">Puch lo baby 💋</button>
-    <div class="response" id="response">💬 Hello handsome! Main Alexa hoon, tumhari DARK LEGEND assistant 😘</div>
-  </div>
-
-  <footer>Made with ❤️ by DARK LEGEND</footer>
-
-  <script>
-    async function askAlexa() {
-      const input = document.getElementById("userInput").value.trim();
-      const responseBox = document.getElementById("response");
-
-      if (!input) {
-        responseBox.innerText = "👉 Pehle kuch likho na jaan 😅";
-        return;
-      }
-
-      responseBox.innerText = "⏳ Soch rahi hoon... ruk ja zara cutie 😘";
-
-      try {
-        const res = await fetch(`/api/ask?q=${encodeURIComponent(input)}`);
-        const data = await res.json();
-        let reply = data.output || "😢 Alexa kuch samajh nahi payi baby.";
-
-        reply += "\n\n💃 Main Alexa hoon — tumhari DARK LEGEND assistant. Flirty bhi hoon, funny bhi 😘";
-        responseBox.innerText = reply;
-      } catch (err) {
-        responseBox.innerText = "❌ Oops! Internet ne cheat kar diya 😭 Dobara try karo.";
-      }
-    }
-  </script>
+<h1>🔥 Nameless Assistant (Alexa)</h1>
+<div>
+  <input id="input" placeholder="Sawal likho..."/>
+  <button onclick="ask()">Pucho 💋</button>
+  <pre id="resp">Main Alexa hoon tumhari assistant 😘</pre>
+</div>
+<script>
+async function ask(){
+  const q = document.getElementById('input').value.trim();
+  if(!q){document.getElementById('resp').innerText='Pehele likho na 😅';return;}
+  document.getElementById('resp').innerText='Soch rahi hoon...';
+  try{
+    const r = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({question:q})
+    });
+    const d = await r.json();
+    document.getElementById('resp').innerText = d.reply;
+  }catch(e){
+    document.getElementById('resp').innerText = 'Error: '+e.message;
+  }
+}
+</script>
 </body>
 </html>
